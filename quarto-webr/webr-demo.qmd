@@ -1,0 +1,17 @@
+---
+title: "Testing"
+format: html
+engine: knitr
+filters:
+- webr
+---
+
+## Heading
+
+```{webr}
+1 + 1 
+```
+
+```{webr}
+message("hello")
+```

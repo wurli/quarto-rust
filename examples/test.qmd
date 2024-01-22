@@ -1,0 +1,22 @@
+---
+format: 
+  html:
+    code-copy: true
+engine: knitr
+filters: 
+  - quarto-rust
+---
+
+# This quarto doc runs *Rust*!
+
+Check it out:
+
+```{playground-rust}
+//| classes: playground language-rust code-with-copy
+
+println!("Hello, world!");
+```
+
+```{r}
+1 + 1
+```
