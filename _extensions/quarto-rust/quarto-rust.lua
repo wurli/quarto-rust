@@ -2,6 +2,9 @@ local QuartoRustVersion = "0.1.0"
 local hasDoneRustSetup = false
 local counter = 0
 
+-- quarto.doc.include_file("after-body", "highlight.js")
+-- quarto.doc.include_file("after-body", "rust-playground.js")
+
 local function ensureRustSetup()
   if hasDoneRustSetup then
     return
@@ -9,10 +12,14 @@ local function ensureRustSetup()
 
   hasDoneRustSetup = true
 
+
   quarto.doc.add_html_dependency({
     name = "rust-playground",
     version = QuartoRustVersion,
-    scripts = { "highlight.js", "rust-playground.js" },
+    scripts = {
+      { path = "highlight.js", afterBody = true },
+      { path = "rust-playground.js", afterBody = true } 
+    },
   })
 
 end
@@ -148,7 +155,11 @@ function CodeBlock(el)
   local not_html = not quarto.doc.is_format("html")
   local not_rust = not el.attr.classes:includes("{playground-rust}")
 
+  quarto.log.output("-- Input ---------------------------------------------------------")
+  quarto.log.output(el)
+
   if no_attrs or not_html or not_rust then
+    quarto.log.output("-- No adjustment")
     return el
   end
 
@@ -158,18 +169,16 @@ function CodeBlock(el)
 
   cellCode = removeEmptyLinesUntilContent(cellCode)
 
-  quarto.log.output(el)
-  quarto.log.output("-----------------------------------------------------------")
-
-  quarto.log.output(cellCode)
-  quarto.log.output(cellOpts)
-
-  quarto.log.output()
-
   el["text"] = cellCode
-  el["attr"]["classes"] = strsplit(cellOpts["classes"], "%s+")
 
-  quarto.log.output("-----------------------------------------------------------")
+  local new_classes = strsplit(cellOpts["classes"], "%s+")
+  -- It seems the 'r' class is what causes nice formatting (including a copy 
+  -- button) to be applied; not the 'cell-code' class >:(
+  table.insert(new_classes, 1, "r")
+  table.insert(new_classes, 1, "cell-code")
+  el["attr"]["classes"] = new_classes
+
+  quarto.log.output("-- Adjusted ---------------------------------------------------------")
   quarto.log.output(el)
 
   return el

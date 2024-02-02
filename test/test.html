@@ -65,8 +65,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="test_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="test_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="test_files/libs/bootstrap/bootstrap.min.js"></script>
-<link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+<link href="test_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 
+<link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
 
 </head>
 
@@ -78,16 +79,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="this-quarto-doc-runs-rust" class="level1">
-<h1>This quarto doc runs <em>Rust</em>!</h1>
-<p>Check it out:</p>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r playground language-rust code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fn <span class="fu">main</span>() {</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  println<span class="sc">!</span>(<span class="st">"Hello, world!"</span>);</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="some-title" class="level1">
+<h1>Some title</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<pre><code>print([1] 2)</code></pre>
 </div>
 </div>
 </section>
@@ -331,6 +328,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<script src="test_files/libs/quarto-contrib/rust-playground-0.1.0/highlight.js"></script>
-<script src="test_files/libs/quarto-contrib/rust-playground-0.1.0/rust-playground.js"></script>
 </body></html>

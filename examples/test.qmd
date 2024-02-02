@@ -13,8 +13,9 @@ Check it out:
 
 ```{playground-rust}
 //| classes: playground language-rust code-with-copy
-
-println!("Hello, world!");
+fn main() {
+  println!("Hello, world!");
+}
 ```
 
 ```{r}
