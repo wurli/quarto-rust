@@ -16,6 +16,9 @@ local function ensureRustSetup()
   quarto.doc.add_html_dependency({
     name = "rust-playground",
     version = QuartoRustVersion,
+    stylesheets = {
+      "run-rust-code-button.css"
+    },
     scripts = {
       { path = "highlight.js", afterBody = true },
       { path = "rust-playground.js", afterBody = true } 

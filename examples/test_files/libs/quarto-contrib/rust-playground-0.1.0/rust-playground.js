@@ -4,16 +4,7 @@
 
 // Global variable, shared between modules
 function playground_text(playground, hidden = true) {
-    let code_block = playground.querySelector("code");
-
-    if (window.ace && code_block.classList.contains("editable")) {
-        let editor = window.ace.edit(code_block);
-        return editor.getValue();
-    } else if (hidden) {
-        return code_block.textContent;
-    } else {
-        return code_block.innerText;
-    }
+    return playground.querySelector("code").innerText;
 }
 
 function fetch_with_timeout(url, options, timeout = 6000) {
@@ -47,21 +38,6 @@ function handle_crate_list_update(playground_block, playground_crates) {
     // and install on change listener to dynamically update ACE editors
     if (window.ace) {
         let code_block = playground_block.querySelector("code");
-        if (code_block.classList.contains("editable")) {
-            let editor = window.ace.edit(code_block);
-            editor.addEventListener("change", function (e) {
-                update_play_button(playground_block, playground_crates);
-            });
-            // add Ctrl-Enter command to execute rust code
-            editor.commands.addCommand({
-                name: "run",
-                bindKey: {
-                    win: "Ctrl-Enter",
-                    mac: "Ctrl-Enter"
-                },
-                exec: _editor => run_rust_code(playground_block)
-            });
-        }
     }
 }
 
@@ -177,62 +153,6 @@ if (window.ace) {
 // even if highlighting doesn't apply
 code_nodes.forEach(function (block) { block.classList.add('hljs'); });
 
-Array.from(document.querySelectorAll("code.language-rust")).forEach(function (block) {
-
-    var lines = Array.from(block.querySelectorAll('.boring'));
-    // If no lines were hidden, return
-    if (!lines.length) { return; }
-    block.classList.add("hide-boring");
-
-    var buttons = document.createElement('div');
-    buttons.className = 'buttons';
-    buttons.innerHTML = "<button class=\"fa fa-eye\" title=\"Show hidden lines\" aria-label=\"Show hidden lines\"></button>";
-
-    // add expand button
-    var pre_block = block.parentNode;
-    pre_block.insertBefore(buttons, pre_block.firstChild);
-
-    pre_block.querySelector('.buttons').addEventListener('click', function (e) {
-        if (e.target.classList.contains('fa-eye')) {
-            e.target.classList.remove('fa-eye');
-            e.target.classList.add('fa-eye-slash');
-            e.target.title = 'Hide lines';
-            e.target.setAttribute('aria-label', e.target.title);
-
-            block.classList.remove('hide-boring');
-        } else if (e.target.classList.contains('fa-eye-slash')) {
-            e.target.classList.remove('fa-eye-slash');
-            e.target.classList.add('fa-eye');
-            e.target.title = 'Show hidden lines';
-            e.target.setAttribute('aria-label', e.target.title);
-
-            block.classList.add('hide-boring');
-        }
-    });
-});
-
-// Just use quarto's built-in copy button
-/* if (window.playground_copyable) {
-    Array.from(document.querySelectorAll('pre code')).forEach(function (block) {
-        var pre_block = block.parentNode;
-        if (!pre_block.classList.contains('playground')) {
-            var buttons = pre_block.querySelector(".buttons");
-            if (!buttons) {
-                buttons = document.createElement('div');
-                buttons.className = 'buttons';
-                pre_block.insertBefore(buttons, pre_block.firstChild);
-            }
-
-            var clipButton = document.createElement('button');
-            clipButton.className = 'fa fa-copy clip-button';
-            clipButton.title = 'Copy to clipboard';
-            clipButton.setAttribute('aria-label', clipButton.title);
-            clipButton.innerHTML = '<i class=\"tooltiptext\"></i>';
-
-            buttons.insertBefore(clipButton, buttons.firstChild);
-        }
-    });
-} */
 
 // Process playground code blocks
 Array.from(document.querySelectorAll(".playground")).forEach(function (pre_block) {
@@ -245,11 +165,8 @@ Array.from(document.querySelectorAll(".playground")).forEach(function (pre_block
     }
 
     var runCodeButton = document.createElement('button');
-    runCodeButton.className = 'fa fa-play play-button';
-  
-    // This was in the original... But don't know why. Disabling it means the 
-    // button shows up even when the quarto bootsrap styling is applied.
-    // runCodeButton.hidden = true;
+    // runCodeButton.className = 'foo foo-play play-button';
+    runCodeButton.className = 'run-rust-code-button play-button';
 
     runCodeButton.title = 'Run this code';
     runCodeButton.setAttribute('aria-label', runCodeButton.title);
@@ -259,30 +176,6 @@ Array.from(document.querySelectorAll(".playground")).forEach(function (pre_block
         run_rust_code(pre_block);
     });
 
-    /* if (window.playground_copyable) {
-        var copyCodeClipboardButton = document.createElement('button');
-        copyCodeClipboardButton.className = 'fa fa-copy clip-button';
-        copyCodeClipboardButton.innerHTML = '<i class="tooltiptext"></i>';
-        copyCodeClipboardButton.title = 'Copy to clipboard';
-        copyCodeClipboardButton.setAttribute('aria-label', copyCodeClipboardButton.title);
-
-        buttons.insertBefore(copyCodeClipboardButton, buttons.firstChild);
-    } */
-
     let code_block = pre_block.querySelector("code");
-    if (window.ace && code_block.classList.contains("editable")) {
-        var undoChangesButton = document.createElement('button');
-        undoChangesButton.className = 'fa fa-history reset-button';
-        undoChangesButton.title = 'Undo changes';
-        undoChangesButton.setAttribute('aria-label', undoChangesButton.title);
-
-        buttons.insertBefore(undoChangesButton, buttons.firstChild);
-
-        undoChangesButton.addEventListener('click', function () {
-            let editor = window.ace.edit(code_block);
-            editor.setValue(editor.originalCode);
-            editor.clearSelection();
-        });
-    }
 });
 
