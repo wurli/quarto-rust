@@ -150,6 +150,9 @@ function strsplit(str, pat)
    return t
 end
 
+
+
+
 function CodeBlock(el)
 
   ensureRustSetup()
@@ -158,11 +161,8 @@ function CodeBlock(el)
   local not_html = not quarto.doc.is_format("html")
   local not_rust = not el.attr.classes:includes("{playground-rust}")
 
-  quarto.log.output("-- Input ---------------------------------------------------------")
-  quarto.log.output(el)
 
   if no_attrs or not_html or not_rust then
-    quarto.log.output("-- No adjustment")
     return el
   end
 
@@ -174,15 +174,9 @@ function CodeBlock(el)
 
   el["text"] = cellCode
 
-  local new_classes = strsplit(cellOpts["classes"], "%s+")
   -- It seems the 'r' class is what causes nice formatting (including a copy 
   -- button) to be applied; not the 'cell-code' class >:(
-  table.insert(new_classes, 1, "r")
-  table.insert(new_classes, 1, "cell-code")
-  el["attr"]["classes"] = new_classes
-
-  quarto.log.output("-- Adjusted ---------------------------------------------------------")
-  quarto.log.output(el)
+  el["attr"]["classes"] = { "r", "cell-code", "playground", "language-rust", "code-with-copy" }
 
   return el
 

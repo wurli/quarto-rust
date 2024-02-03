@@ -12,7 +12,6 @@ filters:
 Check it out:
 
 ```{playground-rust}
-//| classes: playground language-rust code-with-copy
 fn main() {
   println!("Hello, world!");
 }
