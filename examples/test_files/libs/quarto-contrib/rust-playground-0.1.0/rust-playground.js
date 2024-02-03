@@ -211,7 +211,8 @@ Array.from(document.querySelectorAll("code.language-rust")).forEach(function (bl
     });
 });
 
-if (window.playground_copyable) {
+// Just use quarto's built-in copy button
+/* if (window.playground_copyable) {
     Array.from(document.querySelectorAll('pre code')).forEach(function (block) {
         var pre_block = block.parentNode;
         if (!pre_block.classList.contains('playground')) {
@@ -231,7 +232,7 @@ if (window.playground_copyable) {
             buttons.insertBefore(clipButton, buttons.firstChild);
         }
     });
-}
+} */
 
 // Process playground code blocks
 Array.from(document.querySelectorAll(".playground")).forEach(function (pre_block) {
@@ -245,7 +246,11 @@ Array.from(document.querySelectorAll(".playground")).forEach(function (pre_block
 
     var runCodeButton = document.createElement('button');
     runCodeButton.className = 'fa fa-play play-button';
-    runCodeButton.hidden = true;
+  
+    // This was in the original... But don't know why. Disabling it means the 
+    // button shows up even when the quarto bootsrap styling is applied.
+    // runCodeButton.hidden = true;
+
     runCodeButton.title = 'Run this code';
     runCodeButton.setAttribute('aria-label', runCodeButton.title);
 
@@ -254,7 +259,7 @@ Array.from(document.querySelectorAll(".playground")).forEach(function (pre_block
         run_rust_code(pre_block);
     });
 
-    if (window.playground_copyable) {
+    /* if (window.playground_copyable) {
         var copyCodeClipboardButton = document.createElement('button');
         copyCodeClipboardButton.className = 'fa fa-copy clip-button';
         copyCodeClipboardButton.innerHTML = '<i class="tooltiptext"></i>';
@@ -262,7 +267,7 @@ Array.from(document.querySelectorAll(".playground")).forEach(function (pre_block
         copyCodeClipboardButton.setAttribute('aria-label', copyCodeClipboardButton.title);
 
         buttons.insertBefore(copyCodeClipboardButton, buttons.firstChild);
-    }
+    } */
 
     let code_block = pre_block.querySelector("code");
     if (window.ace && code_block.classList.contains("editable")) {
