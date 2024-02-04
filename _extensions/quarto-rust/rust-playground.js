@@ -135,19 +135,8 @@ let code_nodes = Array
     // Don't highlight `inline code` blocks in headers.
     .filter(function (node) {return !node.parentElement.classList.contains("header"); });
 
-if (window.ace) {
-    // language-rust class needs to be removed for editable
-    // blocks or highlightjs will capture events
-    code_nodes
-        .filter(function (node) {return node.classList.contains("editable"); })
-        .forEach(function (block) { block.classList.remove('language-rust'); });
 
-    code_nodes
-        .filter(function (node) {return !node.classList.contains("editable"); })
-        .forEach(function (block) { hljs.highlightBlock(block); });
-} else {
-    code_nodes.forEach(function (block) { hljs.highlightBlock(block); });
-}
+code_nodes.forEach(function (block) { hljs.highlightBlock(block); });
 
 // Adding the hljs class gives code blocks the color css
 // even if highlighting doesn't apply
@@ -165,7 +154,6 @@ Array.from(document.querySelectorAll(".playground")).forEach(function (pre_block
     }
 
     var runCodeButton = document.createElement('button');
-    // runCodeButton.className = 'foo foo-play play-button';
     runCodeButton.className = 'run-rust-code-button play-button';
 
     runCodeButton.title = 'Run this code';

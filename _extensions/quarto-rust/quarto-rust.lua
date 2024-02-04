@@ -114,7 +114,6 @@ local function isVariableEmpty(s)
 end
 
 
-
 -- Remove lines with only whitespace until the first non-whitespace character is detected.
 local function removeEmptyLinesUntilContent(codeText)
   -- Iterate through each line in the codeText table
@@ -130,29 +129,6 @@ local function removeEmptyLinesUntilContent(codeText)
 end
 
 
-
-function strsplit(str, pat)
-   local t = {}
-   local fpat = "(.-)" .. pat
-   local last_end = 1
-   local s, e, cap = str:find(fpat, 1)
-   while s do
-      if s ~= 1 or cap ~= "" then
-         table.insert(t, cap)
-      end
-      last_end = e+1
-      s, e, cap = str:find(fpat, last_end)
-   end
-   if last_end <= #str then
-      cap = str:sub(last_end)
-      table.insert(t, cap)
-   end
-   return t
-end
-
-
-
-
 function CodeBlock(el)
 
   ensureRustSetup()
@@ -160,7 +136,6 @@ function CodeBlock(el)
   local no_attrs = not el.attr
   local not_html = not quarto.doc.is_format("html")
   local not_rust = not el.attr.classes:includes("{playground-rust}")
-
 
   if no_attrs or not_html or not_rust then
     return el
@@ -170,13 +145,17 @@ function CodeBlock(el)
 
   cellCode, cellOpts = extractCodeBlockOptions(el)
 
-  cellCode = removeEmptyLinesUntilContent(cellCode)
-
-  el["text"] = cellCode
+  el["text"] = removeEmptyLinesUntilContent(cellCode)
 
   -- It seems the 'r' class is what causes nice formatting (including a copy 
   -- button) to be applied; not the 'cell-code' class >:(
-  el["attr"]["classes"] = { "r", "cell-code", "playground", "language-rust", "code-with-copy" }
+  el["attr"]["classes"] = { 
+    "r", 
+    "cell-code",
+    "playground",
+    "language-rust",
+    "code-with-copy",
+  }
 
   return el
 

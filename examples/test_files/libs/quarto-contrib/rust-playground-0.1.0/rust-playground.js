@@ -130,24 +130,31 @@ hljs.configure({
     languages: [],      // Languages used for auto-detection
 });
 
-let code_nodes = Array
-    .from(document.querySelectorAll('code'))
+
+// The way this is set up is a bit janky. At first, the code blocks have the 'sourceCode r' 
+// class, and are surrounded by a <pre> with class 'language-rust r'. This is because the
+// r class must be present for quarto to add all the nice formatting we usually get. But
+// don't want to keep the r class in either the inner or outer elements. 
+/* let code_nodes = Array
+    .from(document.querySelectorAll('.r')) 
+    .filter(function(node) {return node.parentElement.classList.contains("language-rust"); })
     // Don't highlight `inline code` blocks in headers.
     .filter(function (node) {return !node.parentElement.classList.contains("header"); });
 
-if (window.ace) {
-    // language-rust class needs to be removed for editable
-    // blocks or highlightjs will capture events
-    code_nodes
-        .filter(function (node) {return node.classList.contains("editable"); })
-        .forEach(function (block) { block.classList.remove('language-rust'); });
+code_nodes.forEach(function (node) {node.classList.remove("r"); });
+code_nodes.forEach(function (node) {node.parentElement.classList.remove("code-with-copy"); });
+code_nodes.forEach(function (node) {node.parentElement.classList.remove("r"); });
+*/
 
-    code_nodes
-        .filter(function (node) {return !node.classList.contains("editable"); })
-        .forEach(function (block) { hljs.highlightBlock(block); });
-} else {
-    code_nodes.forEach(function (block) { hljs.highlightBlock(block); });
-}
+
+let code_nodes = Array
+    .from(document.querySelectorAll('code'))
+    .filter(function(node) {return node.classList.contains("language-rust"); });
+
+console.log("nodes:" + code_nodes.length)
+
+// This line's presence removes R-syntax highlighting
+code_nodes.forEach(function (block) { hljs.highlight(block); });
 
 // Adding the hljs class gives code blocks the color css
 // even if highlighting doesn't apply
@@ -165,7 +172,6 @@ Array.from(document.querySelectorAll(".playground")).forEach(function (pre_block
     }
 
     var runCodeButton = document.createElement('button');
-    // runCodeButton.className = 'foo foo-play play-button';
     runCodeButton.className = 'run-rust-code-button play-button';
 
     runCodeButton.title = 'Run this code';
