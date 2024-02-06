@@ -34,7 +34,7 @@ An example quarto document can be found in the
 
 ## Implementation
 {playground-rust} works by sending code chunks to the 
-[Rust playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021).
+[Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021).
 The implementation draws heavily from the source code for 
 [mdBook](https://github.com/rust-lang/mdBook/blob/master/src/theme/book.js).
 
