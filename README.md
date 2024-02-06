@@ -29,8 +29,8 @@ fn main() {
 ```
 ````
 
-An example quarto document can be found in the [examples](examples/hello-world.html)
-folder.
+An example quarto document can be found in the 
+[examples](examples/hello-world.qmd) folder.
 
 ## Implementation
 {playground-rust} works by sending code chunks to the 
