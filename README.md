@@ -33,9 +33,9 @@ An example quarto document can be found in the
 [examples](examples/hello-world.qmd) folder.
 
 ## Implementation
-{playground-rust} works by sending code chunks to the 
+{playground-rust} code chunks work by sending code to the 
 [Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021).
-The implementation draws heavily from the source code for 
+The implementation of this draws heavily from the source code for 
 [mdBook](https://github.com/rust-lang/mdBook/blob/master/src/theme/book.js).
 
 ## Future
