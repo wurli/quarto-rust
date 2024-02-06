@@ -17,10 +17,9 @@ local function ensureRustSetup()
     name = "rust-playground",
     version = QuartoRustVersion,
     stylesheets = {
-      "run-rust-code-button.css"
+      "run-rust-code-button.css",
     },
     scripts = {
-      { path = "highlight.js", afterBody = true },
       { path = "rust-playground.js", afterBody = true } 
     },
   })
@@ -150,7 +149,7 @@ function CodeBlock(el)
   -- It seems the 'r' class is what causes nice formatting (including a copy 
   -- button) to be applied; not the 'cell-code' class >:(
   el["attr"]["classes"] = { 
-    "r", 
+    "rust",
     "cell-code",
     "playground",
     "language-rust",
